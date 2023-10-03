@@ -6,4 +6,4 @@ Write a Bash script that stops 4-to_infinity_and_beyond process
 Requirements: You must use kill
 """
 
-kill "$(pgrep -la bash | grep ./4-to-infinity_and_beyond | cut -d ' ' -f 1)"
+kill "$(pgrep -f 4-to_infinity_and_beyond)"

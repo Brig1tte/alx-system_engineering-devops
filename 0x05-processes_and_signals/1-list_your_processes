@@ -7,4 +7,4 @@
 	3. Show processes hierarchy
 """
 
-ps -H -Ao user,pid,%cpu.%mem,vsz,rss,tname,stat,bsdstart,time,command
+ps auxf
