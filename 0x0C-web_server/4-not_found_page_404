@@ -9,7 +9,7 @@ sudo apt-get install -y nginx
 
 # setup index page and 301 redirect
 echo "Hello World!" | sudo tee /var/www/html/index.html
-replacement_str="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.ghbizdirectory.com permanent;"
+replacement_str="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
 sudo sed -i "s/server_name _;/$replacement_str/" /etc/nginx/sites-enabled/default
 
 # setup 404 page
