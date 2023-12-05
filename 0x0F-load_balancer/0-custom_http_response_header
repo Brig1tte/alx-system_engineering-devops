@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# A Bash script for NGINX installation, setup on Port 80 HTTP and write Hello World in index file
+
+# update packages
+sudo apt-get update
+
+# install nginx
+sudo apt-get -y install nginx
+
+# firewall allow port 80
+sudo ufw allow 'Nginx HTTP'
+
+# create html directory
+sudo mkdir -p /var/www/html
+
+# change permissions
+sudo chmod -R 755 /var/www
+
+#  create the index.html page
+echo 'Hello World!' | sudo tee /var/www/html/index.html
+
+# create a webpage for error 404
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+# create an HTTP response header/setup redirect
+replaced_string="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/watch?v=QH2-TGUlwu4\/;\\n\\t}/ permanent;"
+sudo sed -i "s/server_name _;/$replaced_string/" /etc/nginx/sites-enabled/default
+
+# configure redirect for 404 error page
+replaced_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$replaced_string/" /etc/nginx/sites-enabled/default
+
+# Test configurations for syntax errors
+sudo nginx -t
+
+# restart nginx to apply changes
+sudo service nginx restart

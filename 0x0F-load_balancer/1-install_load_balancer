@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# A Bash script to install and setup load balancer
+# This script installs and configures HAProxy on lb-01 server
+# It configures HAProxy to send traffic to web-01 and web-02 servers
+# It distributes requests using a roundrobin algorithm
+# It also makes sure that HAProxy can be managed via an init script
+
+# Update repositories and install HAProxy as Load Balancer for the two servers
+sudo apt-get update
+
+sudo apt-get -y install haproxy
+
+# Define the server configuration and append it to the HAProxy config file
+server_config=\
+"
+frontend  ofosua-frontend
+        bind *:80
+        mode http
+        default_backend ofosua-backend
+backend ofosua-backend
+        balance roundrobin
+        server 398531-web-01 100.26.173.255:80 check
+        server 398531-web-02 100.25.166.22:80 check
+"
+echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
+
+# allow haproxy to be started by init script
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
+# Test the HAProxy configuration file for any syntax errors
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Restart the HAProxy service to apply the changes
+sudo service haproxy restart
