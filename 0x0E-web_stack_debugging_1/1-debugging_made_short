@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# A Bash script build up of task 0 to create a link between both default files
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
+echo 1000 > /var/run/nginx.pid
