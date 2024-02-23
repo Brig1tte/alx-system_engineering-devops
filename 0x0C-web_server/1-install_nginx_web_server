@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# A Bash script tO configure a new ubuntu machine as a web server
+
+# update package list
+apt-get update
+
+# install nginx
+apt-get -y install nginx
+
+ufw allow 'Nginx HTTP'
+
+echo "Hello World!" > /var/www/html/index.html
+
+service nginx start

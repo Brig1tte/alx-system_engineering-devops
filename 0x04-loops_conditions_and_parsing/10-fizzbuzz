@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# A Bash script tO display numbers from 1 to 100.
+
+# Requirements:
+#	Display FizzBuzz when the number is a multiple of 3 and 5
+#	Display Fizz when the number is multiple of 3
+#	Display Buzz when the number is a multiple of 5
+#	Otherwise, displas the number
+#	In a list format
+
+for k in {1..100}; do
+	if [ $((k % 3)) == 0 ] && [ $((k % 5)) == 0 ]; then
+		echo FizzBuzz
+	elif [ $((k % 3)) == 0 ]; then
+		echo Fizz
+	elif [ $((k % 5)) -eq 0 ]; then
+		echo Buzz
+	else
+		echo "$k"
+	fi;
+done
